@@ -6,7 +6,9 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import com.example.myapplication.databinding.ActivityMainBinding
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -17,15 +19,31 @@ class MainActivity : AppCompatActivity() {
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(_binding.root)
 
-        val userId = _binding.etUserName.text?.trim().toString()
-        val pass  = _binding.etPass.text?.trim().toString()
+
+
+
+
 
         _binding.btnLogin.setOnClickListener {
-            val message = arrayListOf<String>(userId, pass)
-            val intent = Intent(this, MainActivity2::class.java).apply {
-                putExtra("data", message)
+            val userId = _binding.etUserName.text?.trim().toString()
+            val pass  = _binding.etPass.text?.trim().toString()
+            if(_binding.etUserName.text.toString() == ""){
+                _binding.etUserName.error = "Please Enter Your Email/Mobile Number"
+
             }
-            startActivity(intent)
+            if(_binding.etPass.text.toString() == ""){
+                _binding.etPass.error = "Please Enter Your Password"
+            }
+            val intent = Intent(this, MainActivity2::class.java)
+            if(userId.isNotEmpty() && pass.isNotEmpty()){
+                if (userId.lowercase() == "imran" && pass.lowercase() == "1234"){
+                    startActivity(intent)
+                }else{
+                    Toast.makeText(baseContext, "Your Email or Password is Wrong", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+
         }
 
     }
